@@ -69,6 +69,35 @@ Start the Mosquitto broker:
 docker compose up
 ```
 
+## Bonus: Subscribe to a Topic
+On your laptop, you may want to subscribe to a topic, e.g., for debugging.
+
+### Approach 1: MQTTX
+[MQTTX](https://mqttx.app/) provides a nice Docker image [emqx/mqttx-cli](https://hub.docker.com/r/emqx/mqttx-cli) for running an MQTT CLI client:
+
+```shell
+docker run -it --rm emqx/mqttx-cli
+```
+In the container, you can subscribe to a topic via:
+```shell
+mqttx sub -t 'my/topic/#' -h 192.168.178.39 -p 1883 -u my-username -P my-password
+```
+
+### Approach 2: Eclipse Mosquitto
+Similarly, this is also possible using the same Eclipse Mosquitto container image as used as a broker before:
+
+```shell
+docker run -it --rm eclipse-mosquitto sh
+```
+
+In the container, you can subscribe to a topic via:
+```shell
+mosquitto_sub -t 'my/topic/#' -h 192.168.178.39 -p 1883 -u my-username -P my-password -d
+```
+
+> `-d` enables debug messages / more verbose output.
+
+
 ## Sources
 
 - https://hub.docker.com/_/eclipse-mosquitto/
